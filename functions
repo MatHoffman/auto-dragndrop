@@ -1,0 +1,35 @@
+function TransfertToRight
+{
+  $signature=@' 
+    [DllImport("user32.dll",CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
+    public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+'@ 
+	Add-Type -AssemblyName System.Windows.Forms
+	$SendMouseClick = Add-Type -memberDefinition $signature -name "Win32MouseEventNew" -namespace Win32Functions -passThru
+	[Windows.Forms.Cursor]::Position = "120,250"
+    $SendMouseClick::mouse_event(0x00000002, 0, 0, 0, 0);
+	for ($i =130; $i -lt 1400; $i+=50)
+	{
+		[Windows.Forms.Cursor]::Position = "$i,250"
+		Start-Sleep -m 25
+	}
+     $SendMouseClick::mouse_event(0x00000004, 0, 0, 0, 0);
+}
+
+function TransfertToLeft
+{
+  $signature=@' 
+    [DllImport("user32.dll",CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
+    public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+'@ 
+	Add-Type -AssemblyName System.Windows.Forms
+	$SendMouseClick = Add-Type -memberDefinition $signature -name "Win32MouseEventNew" -namespace Win32Functions -passThru
+	[Windows.Forms.Cursor]::Position = "1400,250"
+    $SendMouseClick::mouse_event(0x00000002, 0, 0, 0, 0);
+	for ($i =1400; $i -gt 130; $i-=50)
+	{
+		[Windows.Forms.Cursor]::Position = "$i,250"
+		Start-Sleep -m 25
+	}
+    $SendMouseClick::mouse_event(0x00000004, 0, 0, 0, 0);
+}
