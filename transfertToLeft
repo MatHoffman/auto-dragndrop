@@ -1,0 +1,7 @@
+$nbItem = 50
+
+for ($iter =0; $iter -lt $nbItem; $iter+=1)
+{
+Start-Sleep -m 1000
+TransfertToLeft
+}
